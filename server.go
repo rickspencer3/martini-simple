@@ -28,11 +28,11 @@ type SomeData struct {
 func GetAllData(r render.Render) {
 	sd1 := SomeData{
 		ID:          1,
-		Description: "The first sample food",
+		Description: "The first sample datum",
 	}
 	sd2 := SomeData{
 		ID:          2,
-		Description: "The second sample food",
+		Description: "The second sample datum",
 	}
 	sdl := []SomeData{sd1, sd2}
 	r.JSON(200, map[string]interface{}{
