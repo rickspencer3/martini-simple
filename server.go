@@ -1,18 +1,18 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/go-martini/martini"
+	"github.com/martini-contrib/render"
 )
 
 var m *martini.Martini
 
 func main() {
 	m = martini.New()
+	m.Use(render.Renderer(render.Options{}))
 
 	r := martini.NewRouter()
-	r.Get("/foods", GetAllData)
+	r.Get("/data", GetAllData)
 
 	m.Action(r.Handle)
 	m.Run()
@@ -25,8 +25,7 @@ type SomeData struct {
 }
 
 //GetAllData - a Sample function that demonstrates getting data and converting it to JSON
-func GetAllData() []SomeData {
-	fmt.Println("called GetFoods")
+func GetAllData(r render.Render) {
 	sd1 := SomeData{
 		ID:          1,
 		Description: "The first sample food",
@@ -36,5 +35,7 @@ func GetAllData() []SomeData {
 		Description: "The second sample food",
 	}
 	sdl := []SomeData{sd1, sd2}
-	return sdl
+	r.JSON(200, map[string]interface{}{
+		"status": "OK",
+		"value":  sdl})
 }
